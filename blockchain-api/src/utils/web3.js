@@ -11,8 +11,6 @@ export default {
       console.log('Blockchain Connecting ...');
       const provider = new Web3.providers.HttpProvider('http://localhost:8545');
       web3 = new Web3(provider);
-      const acc = await web3.eth.getAccounts();
-      console.log('--web3.',acc)
       console.log('----connected to blockchain---')
     },
     createAccount: async() =>{

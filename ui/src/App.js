@@ -1,21 +1,22 @@
 import React from 'react';
-import { Provider } from "react-redux";
-import { ConnectedRouter } from "connected-react-router";
-import { PersistGate } from "redux-persist/integration/react";
-import { store, persistor } from "./store/store";
-import { history } from "./store/enhancers/middlewares/router";
 import Layout from "./containers/Layout";
+import { Router } from 'react-router';
+import { createBrowserHistory } from "history";
+import ApolloClient from 'apollo-boost';
+import { ApolloProvider } from '@apollo/react-hooks';
+const client = new ApolloClient({
+  uri: 'http://localhost:8080/graphql',
+});
 
-
+const history = createBrowserHistory();
 function App() {
+  console.log('client provider',client)
   return (
-    <Provider store={store}>
-      <PersistGate loading={null} persistor={persistor}>
-        <ConnectedRouter history={history}>
+    <ApolloProvider client={client}>
+      <Router history={history}>
         <Layout/>
-        </ConnectedRouter>
-      </PersistGate>
-    </Provider>
+      </Router>
+    </ApolloProvider>
   );
 }
 

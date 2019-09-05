@@ -1,14 +1,14 @@
 import mongoose from 'mongoose';
 import express from 'express';
-import web3 from './utils/web3';
+
 import jwt from 'express-jwt';
 import { ApolloServer } from 'apollo-server-express';
 import typeDefs from './schema/index';
 import resolvers from './resolver/user';
 import IsAdminDirective from './directive/isAdmin';
-const path = '/api'
+const path = '/graphql'
 console.log('-----rootresolver',resolvers)
-web3.connect();
+
 mongoose.connect(
   'mongodb://localhost:27017/opschain-wallet',
 {
@@ -47,6 +47,6 @@ const server = new ApolloServer({
 server.applyMiddleware({ app, path })
 
 
-app.listen(3000, '0.0.0.0', () => {
+app.listen(process.env.PORT || 8080, '0.0.0.0', () => {
   console.log(`server running on port 3000`);
 });
