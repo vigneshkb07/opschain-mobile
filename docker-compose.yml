@@ -6,7 +6,7 @@ services:
       dockerfile: Dockerfile
     command: npm run dev
     ports:
-      - 8080:80
+      - 9000:80
     depends_on:
       - mongodb
       - graphql-api-watch
@@ -43,7 +43,7 @@ services:
       dockerfile: Dockerfile
     command: npm run dev
     ports:
-      - 8081:80
+      - 9001:80
     depends_on:
       - mongodb
       - blockchain-api-watch
@@ -71,7 +71,7 @@ services:
   ganache:
     image: trufflesuite/ganache-cli:latest
     ports:
-      - 8545:8545
+      - 9002:8545
     command: ganache-cli -m 'candy maple cake sugar pudding cream honey rich smooth crumble sweet treat' --networkId 100 -a 1 --gasPrice 1 --gasLimit 8000000
     networks:
       - opschain_network
