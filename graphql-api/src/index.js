@@ -9,13 +9,23 @@ import IsAdminDirective from './directive/isAdmin';
 const path = '/graphql'
 console.log('-----rootresolver',resolvers)
 
-mongoose.connect(
-  process.env.OFFCHAIN_DB_URL,
-{
-  dbName: process.env.OFFCHAIN_DB_NAME,
-  useNewUrlParser: true,
-},
-);
+const connectWithRetry = () => {
+  console.log('MongoDB connection with retry')
+  mongoose.connect(
+    process.env.OFFCHAIN_DB_URL,
+  {
+    dbName: process.env.OFFCHAIN_DB_NAME,
+    useNewUrlParser: true,
+  },
+  ).then(()=>{
+    console.log('MongoDB is connected')
+  }).catch(err=>{
+    console.log('MongoDB connection unsuccessful, retry after 5 seconds.')
+    setTimeout(connectWithRetry, 10000)
+  })
+}
+
+connectWithRetry();
 mongoose.set('useCreateIndex', true);
 mongoose.Promise = global.Promise;
 const db = mongoose.connection;
