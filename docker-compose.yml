@@ -97,7 +97,7 @@ services:
       context: ./ui
       dockerfile: Dockerfile
     ports:
-      - 3000:3000
+      - 9003:3000
     volumes:
       - ./ui/public:/app/public:delegated
       - ./ui/src:/app/src:delegated
