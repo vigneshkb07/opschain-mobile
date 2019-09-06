@@ -6,7 +6,7 @@ import axios from 'axios';
  */
 const getNewUserWalletAddress = async () => {
   
-  const url = `http://localhost:8081/wallet/getNewUserWallet`;
+  const url = `http://${process.env.BLOCKCHAIN_API}/wallet/getNewUserWallet`;
   const options = {
     body:{}
   };

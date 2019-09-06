@@ -10,9 +10,9 @@ const path = '/graphql'
 console.log('-----rootresolver',resolvers)
 
 mongoose.connect(
-  'mongodb://localhost:27017/opschain-wallet',
+  process.env.OFFCHAIN_DB_URL,
 {
-  dbName: 'graphql-poc',
+  dbName: process.env.OFFCHAIN_DB_NAME,
   useNewUrlParser: true,
 },
 );

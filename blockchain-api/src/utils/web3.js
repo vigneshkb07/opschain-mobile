@@ -9,7 +9,7 @@ export default {
      */
     connect: async() => {
       console.log('Blockchain Connecting ...');
-      const provider = new Web3.providers.HttpProvider('http://localhost:8545');
+      const provider = new Web3.providers.HttpProvider(`http://${process.env.BLOCKCHAIN_HOST}:${process.env.BLOCKCHAIN_PORT}`);
       web3 = new Web3(provider);
       console.log('----connected to blockchain---')
     },

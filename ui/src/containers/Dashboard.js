@@ -4,6 +4,7 @@ import { withRouter } from 'react-router';
 import {Container,Grid,Typography} from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import FotterNavigation from '../components/BottomNavigation';
+import TokenCard from '../components/TokenCard';
 import { useQuery } from '@apollo/react-hooks';
 import { GET_USER } from '../graphql/queries';
 const useStyles = makeStyles(theme => ({
@@ -42,7 +43,8 @@ function Dashboard(props){
         <Grid item xs={12}><Typography variant="body2" gutterBottom>
        Address: { data.getUser.walletAddress}
       </Typography></Grid>
-        
+        <TokenCard/>
+        <TokenCard/>
         </Grid>
        <FotterNavigation/>
     </Container>

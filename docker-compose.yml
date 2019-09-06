@@ -1,0 +1,101 @@
+version: '3.5'
+services: 
+  graphql-api:
+    build:
+      context: ./graphql-api
+      dockerfile: Dockerfile
+    command: npm run dev
+    ports:
+      - 8080:80
+    depends_on:
+      - mongodb
+      - graphql-api-watch
+      - blockchain-api
+    volumes:
+      - ./graphql-api/dist:/app/dist:delegated
+    environment:
+      VIRTUAL_HOST: api.blockchain.docker
+      PORT: 80
+      OFFCHAIN_DB_URL: mongodb://root:password@mongodb:27017
+      OFFCHAIN_DB_NAME: opschain-wallet
+      OFFCHAIN_DB_USER_COLLECTION: user
+      JWT_PASSWORD: 'supersecret'
+      JWT_TOKEN_EXPIRE_TIME: 86400000
+      BLOCKCHAIN_API: blockchain-api
+    networks:
+      - opschain_network
+
+  graphql-api-watch:
+    build:
+      context: ./graphql-api
+      dockerfile: Dockerfile
+    command: npm run watch
+    volumes:
+      - ./graphql-api/src:/app/src:delegated
+      - ./graphql-api/dist:/app/dist:delegated
+    networks:
+      - opschain_network
+
+  blockchain-api:
+    build:
+      context: ./blockchain-api
+      dockerfile: Dockerfile
+    command: npm run dev
+    ports:
+      - 8081:80
+    depends_on:
+      - blockchain-api-watch
+      - ganache
+    volumes:
+      - ./blockchain-api/dist:/app/dist:delegated
+    environment:
+      VIRTUAL_HOST: api.blockchain.docker
+      PORT: 80
+      BLOCKCHAIN_HOST: ganache
+      BLOCKCHAIN_PORT: 8545
+    networks:
+      - opschain_network
+
+  blockchain-api-watch:
+    build:
+      context: ./blockchain-api
+      dockerfile: Dockerfile
+    command: npm run watch
+    volumes:
+      - ./blockchain-api/src:/app/src:delegated
+      - ./blockchain-api/dist:/app/dist:delegated
+    networks:
+      - opschain_network
+  ganache:
+    image: trufflesuite/ganache-cli:latest
+    ports:
+      - 8545:8545
+    command: ganache-cli -m 'candy maple cake sugar pudding cream honey rich smooth crumble sweet treat' --networkId 100 -a 1 --gasPrice 1 --gasLimit 8000000
+    networks:
+      - opschain_network
+
+  mongodb:
+    image: mongo:4.0.4
+    restart: unless-stopped
+    ports:
+      - 27017:27017 
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: password
+      MONGO_INITDB_DATABASE: opschain-wallet
+    volumes:
+      - ./db/:/docker-entrypoint-initdb.d/:delegated
+      - ./db-data:/data/db
+    logging:
+      options:
+        max-size: 100m
+    networks:
+      - opschain_network
+
+networks:
+  opschain_network:
+    driver: bridge
+    name: opschain_network
+
+volumes:
+  db-data:
