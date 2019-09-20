@@ -18,7 +18,7 @@ import { getNewUserWalletAddress } from '../service/userWalletService';
   signup: async(_,args) =>{
       try {
         const existingUser = await userModel.findOne({ email: args.email });
-        console.log('------',existingUser)
+        console.log('-----mm-',existingUser)
         if (existingUser) {
           throw new Error('User exists already.');
         }

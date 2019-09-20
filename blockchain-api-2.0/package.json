@@ -1,0 +1,26 @@
+{
+  "name": "blockchain-api-2.0",
+  "version": "1.0.0",
+  "description": "api implementatio0n using koa",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@koa/cors": "^3.0.0",
+    "ajv": "^6.10.2",
+    "axios": "^0.19.0",
+    "debug": "^4.1.1",
+    "koa": "^2.8.1",
+    "koa-bodyparser": "^4.2.1",
+    "koa-logger": "^3.2.1",
+    "koa-mount": "^4.0.0",
+    "koa-route": "^3.2.0",
+    "uuid": "^3.3.3",
+    "web3-utils": "^1.2.1",
+    "opschain-connector": "git+https://6be82efc2a1497cc92859d259778fbdf3012bb3c:@github.com/EYBlockchain/opschain-connector.git"
+  }
+}

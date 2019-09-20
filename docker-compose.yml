@@ -111,6 +111,12 @@ services:
     logging:
       options:
         max-size: 10m
+  test:
+    build: ./test
+    volumes:
+      - ./test:/app:delegated
+    networks:
+      - opschain_network
 
 networks:
   opschain_network:
