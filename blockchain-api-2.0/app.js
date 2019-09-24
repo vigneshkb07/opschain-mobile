@@ -35,14 +35,13 @@ const main = async () => {
     }
   })
 
-  app.use(cors({
-    credentials: true
-  }))
+ app.use(cors());
   
   app.use(await schema({
     mintProductRefToken : require('./schema/mintProductRefToken.json'),
     mintProductRightToken: require('./schema/mintProductRightToken.json'),
-    mintProductToken: require('./schema/mintProductToken.json')
+    mintProductToken: require('./schema/mintProductToken.json'),
+    tokenTransfer: require('./schema/tokenTransfer.json')
   }))
 
   app.use(mount('/api/token', await token()))
@@ -54,7 +53,7 @@ const main = async () => {
 
 if (require.main === module) {
   main().then(
-    (app) => app.listen(9005),
+    (app) => app.listen(80),
     console.error
   )
 }

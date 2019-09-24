@@ -14,14 +14,17 @@ module.exports = async () => {
    */
   app.use(route.post('/new', async (ctx) => {
     //JSON Schema
-    //const payload = ctx.checkPayload(ctx, 'user')
+   // const payload = ctx.checkPayload(ctx, 'user')
     // if (!payload) {
     //     throw new ExceptionHandler(RESPONSE_CODES.APPLICATION_ERROR, 'PAYLOAD ISSUE : ' + global.jsonErrorMessage)
     // }
-    let results = await requestManager.createUser()
+    //let results = await requestManager.createUser()
+    let response = { address:'0x89748738748379898934893498'}
     // Return status and result 
     ctx.status = RESPONSE_CODES.SUCCESS
-    ctx.body = results
+    ctx.body = {
+      data: response
+  }
 }))
 
   return app

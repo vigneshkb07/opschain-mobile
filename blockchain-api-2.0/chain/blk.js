@@ -15,7 +15,7 @@ module.exports = (async function () {
   // Transaction Service : Private network initialization
   var privateTransactionService = new TransactionService(BLK_PRIVATE_NODE_HOST + ':' + BLK_PRIVATE_NODE_PORT, walletService, nbBlockConfirmation = 1, defaultGasPrice = 0)
    
-  var receipts = await Promise.all([promiseW1, promiseC1])
+  //var receipts = await Promise.all([promiseW1, promiseC1])
 
   const ProductChain = require('./productChain')
   const WalletChain = require('./walletChain')

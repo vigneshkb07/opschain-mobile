@@ -25,8 +25,8 @@ module.exports = async () => {
         }
         
         const response= {
-            to: "0x",
-            from: "0X1",
+            to: "0x090932093092039",
+            from: "0X10909203092309039",
             tokenId: "89893888"
         }
 
@@ -52,11 +52,13 @@ module.exports = async () => {
      */
     app.use(route.post('/mintProductRefToken', async (ctx) => {
         // JSON Schema Verification
+        console.log('----ctx',ctx)
         let payload = ctx.checkPayload(ctx, 'mintProductRefToken')
+        console.log('---->',payload)
         if (!payload) {
             throw new ExceptionHandler(RESPONSE_CODES.APPLICATION_ERROR, 'PAYLOAD ISSUE : ' + global.jsonErrorMessage)
-
         }
+       
         //Make sure this structure, specially the order, matches that of the method we are trying to call
         systemPayload = {
             to:  await payload.to,
@@ -93,6 +95,7 @@ module.exports = async () => {
      */
     app.use(route.post('/mintProductToken', async (ctx) => {
         // JSON Schema Verification
+        console.log('---->ctx',ctx)
         let payload = ctx.checkPayload(ctx, 'mintProductToken')
         if (!payload) {
             throw new ExceptionHandler(RESPONSE_CODES.APPLICATION_ERROR, 'PAYLOAD ISSUE : ' + global.jsonErrorMessage)
@@ -111,7 +114,8 @@ module.exports = async () => {
           }
         //const response = await requestManager.genericMethod(contractInfo, payload)
         const response= {
-            tokenId:'0x985985989595989859895'
+            tokenId:'0x985985989595989859895',
+            hash:'0x46991f280c38a571480b544f6c2b2718be249246225efcf565a03c7908cbc472'
         }
         // TODO : maybe do something with the response
         //let response = await systemCall(systemPayload, url)

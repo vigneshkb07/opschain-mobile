@@ -10,8 +10,7 @@ services:
     depends_on:
       - mongodb
       - graphql-api-watch
-      - blockchain-api
-      - ganache
+      - blockchain-api-2.0
     volumes:
       - ./graphql-api/dist:/app/dist:delegated
     environment:
@@ -22,7 +21,7 @@ services:
       OFFCHAIN_DB_USER_COLLECTION: user
       JWT_PASSWORD: 'supersecret'
       JWT_TOKEN_EXPIRE_TIME: 86400000
-      BLOCKCHAIN_API: blockchain-api
+      BLOCKCHAIN_API: blockchain-api-2.0
     networks:
       - opschain_network
 
@@ -37,42 +36,20 @@ services:
     networks:
       - opschain_network
 
-  blockchain-api:
+  blockchain-api-2.0:
     build:
-      context: ./blockchain-api
+      context: ./blockchain-api-2.0
       dockerfile: Dockerfile
-    command: npm run dev
+    command: npm start
     ports:
-      - 9001:80
+      - 9005:80
     depends_on:
       - mongodb
-      - blockchain-api-watch
-      - ganache
-    volumes:
-      - ./blockchain-api/dist:/app/dist:delegated
     environment:
       VIRTUAL_HOST: api.blockchain.docker
       PORT: 80
       BLOCKCHAIN_HOST: ganache
       BLOCKCHAIN_PORT: 8545
-    networks:
-      - opschain_network
-
-  blockchain-api-watch:
-    build:
-      context: ./blockchain-api
-      dockerfile: Dockerfile
-    command: npm run watch
-    volumes:
-      - ./blockchain-api/src:/app/src:delegated
-      - ./blockchain-api/dist:/app/dist:delegated
-    networks:
-      - opschain_network
-  ganache:
-    image: trufflesuite/ganache-cli:latest
-    ports:
-      - 9002:8545
-    command: ganache-cli -m 'candy maple cake sugar pudding cream honey rich smooth crumble sweet treat' --networkId 100 -a 1 --gasPrice 1 --gasLimit 8000000
     networks:
       - opschain_network
 

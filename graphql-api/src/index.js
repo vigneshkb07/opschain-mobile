@@ -4,7 +4,7 @@ import express from 'express';
 import jwt from 'express-jwt';
 import { ApolloServer } from 'apollo-server-express';
 import typeDefs from './schema/index';
-import resolvers from './resolver/user';
+import resolvers from './resolver';
 import IsAdminDirective from './directive/isAdmin';
 const path = '/graphql'
 console.log('-----rootresolver',resolvers)

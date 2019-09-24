@@ -1,19 +1,23 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
-    "$id": "mintProductRefToken.schema.json",
-    "title": "mintProductRefToken",
+    "$id": "tokenTransfer.schema.json",
+    "title": "tokenTransfer",
     "description": "batch json schema",
     "type": "object",
-    "properties": {           
+    "properties": { 
+      "from":{
+          "description": "from address",
+          "type":"string"
+      },         
       "to": {
         "description": "Name of the startup which will receive the transfer",
         "type": "string"
       },
-      "tokenURI":{
+      "tokenId":{
         "description": "metadata of a toiken",
         "type": "string"
       }
     },
-    "required": [ "to","tokenURI"],
+    "required": [ "to","tokenId","tokenURI"],
     "additionalProperties": false
   }

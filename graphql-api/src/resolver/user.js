@@ -4,7 +4,7 @@ import jsonwebtoken from 'jsonwebtoken';
 import { getNewUserWalletAddress } from '../service/userWalletService';
 
 
- const resolvers = {
+ const userResolvers = {
   Query: {
     getUserDetails:async (_,args,p,req)=> {
       return userModel.find({}).exec();
@@ -22,14 +22,15 @@ import { getNewUserWalletAddress } from '../service/userWalletService';
         if (existingUser) {
           throw new Error('User exists already.');
         }
-        const { address } = await getNewUserWalletAddress();
+        const data = await getNewUserWalletAddress();
+        console.log('---->address',data)
         const hashedPassword = await bcrypt.hash(args.password, 12);
         const user = new userModel({
           email: args.email,
           password: hashedPassword,
           name:args.name,
           role:args.role,
-          walletAddress:address
+          walletAddress:data.data.address
         });
         const result = await user.save();
         return result
@@ -62,5 +63,5 @@ import { getNewUserWalletAddress } from '../service/userWalletService';
   }
 };
 
-export default resolvers;
+export default userResolvers;
 
